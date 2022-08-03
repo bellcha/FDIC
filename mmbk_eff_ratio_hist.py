@@ -4,14 +4,15 @@ import pandas as pd
 from dataclasses import dataclass, asdict
 
 @dataclass
-class MMBKData:
+class BankData:
     REPDTE: str
     ASSET: int
     EEFFQR: float
+    NETINC: int
 
 def main():
     
-    url = 'https://banks.data.fdic.gov/api/financials?filters=CERT%3A12203&fields=REPDTE%2CASSET%2CEEFFQR&sort_by=REPDTE&sort_order=DESC&limit=10000&offset=0&agg_limit=1&format=json&download=false&filename=data_file'
+    url = 'https://banks.data.fdic.gov/api/financials?filters=CERT%3A12203&fields=REPDTE%2CASSET%2CEEFFQR%2CDEP%2CNETINC&sort_by=REPDTE&sort_order=DESC&limit=10000&offset=0&agg_limit=1&format=json&download=false&filename=data_file'
     
     data = rq.get(url).text
     
@@ -21,7 +22,7 @@ def main():
     
     
     for d in json_data['data']:
-        results = MMBKData(REPDTE=d['data']['REPDTE'], ASSET=d['data']['ASSET'], EEFFQR=d['data']['EEFFQR'])
+        results = BankData(REPDTE=d['data']['REPDTE'], ASSET=d['data']['ASSET'], EEFFQR=d['data']['EEFFQR'], NETINC=d['data']['NETINC'])
         row = pd.DataFrame(asdict(results), index=[0])
         mmbk_df = pd.concat([mmbk_df,row], axis=0 ,ignore_index=True)
     
