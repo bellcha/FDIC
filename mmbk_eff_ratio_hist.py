@@ -6,8 +6,8 @@ from dataclasses import dataclass, asdict
 @dataclass
 class MMBKData:
     REPDTE: str
-    ASSET: str
-    EEFFQR: str
+    ASSET: int
+    EEFFQR: float
 
 url = 'https://banks.data.fdic.gov/api/financials?filters=CERT%3A12203&fields=REPDTE%2CASSET%2CEEFFQR&sort_by=REPDTE&sort_order=DESC&limit=10000&offset=0&agg_limit=1&format=json&download=false&filename=data_file'
 
